@@ -1,0 +1,127 @@
+		------CONFIG------
+//IDENTITY
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+//EDITOR - MERGER
+$ git config --global core.editor notepad++
+$ git config --global merge.tool vimdiff
+//COLORS
+$ git config --global color.diff auto
+$ git config --global color.status auto
+$ git config --global color.branch auto
+
+PS : --global will affect a settings to every action made with git, if we want an attribute repository specific, just remove it.
+
+//ACCESS TO A LOCAL REPO PATH
+root ~
+$ cd /c/Users/[Username]/Desktop/[RepositoryName]
+root ~/Users/[Username]/Desktop/[RepositoryName]
+
+//INIT A LOCAL REPO
+$ git init
+Initialized empty Git repository in 
+C:/Users/[Username]/Desktop/[RepositoryName].git
+
+//CREATE POINTER TO DISTANT REPOSITORY = Github
+$ git remote add [RepositoryName] https://github.com/[UserName]/[DistantRepoName].git
+
+//CLONE DISTANT REPO ON LOCAL REPO
+$ git clone https://github.com/[UserName]/[DistantRepoName].git
+
+//GET EXISTING BRANCHS IN REPO
+$ git branch
+
+PS : on a new project, the main and only branche is always * master
+=> the star before the branch name indicates this branch is the one we are actually using
+WARNING : Until the first commit, no master branch exists
+
+//CREATE LOCAL BRANCH
+$ git branch [NameNewBranch]
+=> this branch will now appear like so when we get existing ones :
+* master
+[NameNewBranch]
+
+//POSITION GIT ON A BRANCH
+$ git checkout [BranchTargetName]
+
+//DELETE A BRANCH
+standard deletion : $ git branch -d [BranchToDeleteName]
+force deletion : $ git branch -D [BranchToDeleteName]
+
+WARNING : using the force way to delete a branch will also delete all modifications non-commited on this branch
+
+//MAKE A COMMIT
+$ git commit -m “[Commit describing the action]”
+
+//ADD A FILE TO INDEX
+$ git add
+
+//GET ACTIONS HISTORY
+$ git reflog
+
+//SEE THE FILES STATE
+$ git status
+
+//SEE ALL COMMITS MADE
+$ git log
+=> return the commits history (inversed chronological order)
+
+//STASH A NON-COMMITED FILE TO ANOTHER BRANCH
+$ git stash
+Stashing a modification allows us to take it out of the current branch in order to affect it on another branch. The current branch is immediately freed from the modification.
+
+Then, we place ourselves into the other branch and call this :
+$ git stash apply
+=> this will apply the last transfered modification done.
+
+We can get a list of all the stashes made :
+$ git stash list
+
+Then, we can call the identifier with git stashn in order to transfer a former modification :
+$ got stash apply stash@{STASHID} 
+
+//STASH A COMMITED FILE TO ANOTHER BRANCH
+If we want to cancel a commit on a modified file, we first need to get the ID of the commit call :
+$ git log
+
+Once we have it, we can delete the last commit made on the current branch :
+$ git reset --hard HEAD^
+=> HEAD^ indicates we want to delete the last commit made
+
+Then, we will transfer the commit on the other branch with the ID we got :
+$ git reset --hard [CommitID]
+=> We can enter just the 8 first digit of the [CommitID] to make things simpler.
+
+//CHANGE THE MESSAGE OF A COMMIT
+WARNING : Only works for the last commit made!
+$ git commit --amend -m "[NewCommitMessage]"
+
+//ADD A FILE TO AN ALREADY MADE COMMIT
+git add [FileToAdd]
+git commit --amend --no-edit
+=> the --no-edit paramater allows us to not modify the commit message
+
+//CANCEL LAST PUBLIC COMMIT (on Distant Repo)
+$ git revert HEAD^
+=> Written in cancelation commit's history
+=> no impact on commit standard history
+=> it's better to use $git reset for private commit 
+
+		------Lifecycle------
+//THE .git FILE
+It will appear in the Hidden Folder of an initialized git repository on Windows.
+
+//THE 3 MAIN LOCAL ZONES
+Git handles the different versions of local repositories through 3 main local zones : 
+1) The working directory = WD
+2) The index
+3) The local repository = Git directory/repository 
+
+The index represents all modified files that will appear in our next commit.
+When we use $ git add, it puts the newly added file from the working directory to the index.
+
+The local repository is the history of all the actions (commits, configurations...), a kind of archive repository.
+When we use $ git commit, it puts the files from the index into the git repository.
+We can see all those archives and their SHA by calling $ git reflog
+=> It's useful the come back on a specific commit!
+The SHA is the identifier of an action.
