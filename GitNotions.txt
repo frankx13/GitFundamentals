@@ -1,8 +1,5 @@
 		------CONFIG------
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 //IDENTITY
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
@@ -111,14 +108,31 @@ $ git revert HEAD^
 => no impact on commit standard history
 => it's better to use $git reset for private commit 
 
-<<<<<<< HEAD
+//OPEN FILE WITH EDITOR INSIDE GIT (here editor is VIM)
+$ vim [FileName]
+
+//FIX CASE : WRONG FILE COMMITED
+In case we commited the wrong file and want to revert it, we can "Travel back in Time" in this case.
+The princip is the following : a second commit will be created, that will counter the actions of the first one. It will not delete the first commit from the commit history, but establish how to cancel the change made by this commit, resulting in a second commit.
+We use revert to do so.
+=> The difference between reset and revert is that reset will not create a new commit.
+
+So, when the wrong commit is made, we just need to use :
+$ git revert HEAD
+
+Then, we can remove our file and make the "repairing" commit.
+
+		------RESOLVE A CONFLICT------
+
+If we have a conflict on the same file, we can easily fix it by opening directly an editor directly, choose which version we want and then commit the changes into Git.
+1) $ vim [Filename]
+2) Choose the modification we want to keep
+3) $ git commit
+
 
 
 		------LIFECYCLE------
 
-=======
-		------Lifecycle------
->>>>>>> master
 //THE .git FILE
 It will appear in the Hidden Folder of an initialized git repository on Windows.
 
@@ -136,7 +150,6 @@ When we use $ git commit, it puts the files from the index into the git reposito
 We can see all those archives and their SHA by calling $ git reflog
 => It's useful the come back on a specific commit!
 The SHA is the identifier of an action.
-<<<<<<< HEAD
 
 
 
@@ -155,5 +168,38 @@ Click on SSH and GPG keys.
 New SSH Key.
 Choose a title and paste the SSH key.
 Confirm the account password and the key will be successfully added.
-=======
->>>>>>> master
+
+
+
+		------GIT RESET------
+
+The $git reset command is a polyvalent tool to cancel the changes made.
+It can be called by three different ways with different argument :
+1) --soft
+2) --mixed
+3) --hard
+
+HARD
+$ git reset [TargetCommitID] --hard will come back to any commit made in the past.
+=> useful when, for example, we make a mistake on a functionnality and we want to restart from the beginning.
+WARNING : Everything made after the commit will be forgotten, we should take caution when using it.
+
+MIXED
+$ git reset HEAD~ allows us to come back just before the last commit, or the last commit specified, not deleting the ongoing modifications. It will also create an untied HEAD. 
+If no arguments are specified, git reset is the equivalent to git reset --mixed by default.
+Just typing "$ git reset" is the equivalent of typing "$ git reset --mixed HEAD~".
+=> can be useful when we have indexed files not yet commited (= added), in order to deindex them.
+
+SOFT
+$ git reset --soft will place ourselves on a specific commit, in order to see the code at a T time or to create a branch from a former commit. It does not delete anything, and does not create any untied HEAD.
+
+In the lifecycle, each one acts on a level :
+--hard acts in the working directory directly
+--mixed acts on the index
+--soft acts in the local directory
+
+
+
+		------WHAT IS THE HEAD ?------
+
+In Git, the HEAD is a pointer, serving as reference of our current position in our Git working repository. By default, the HEAD points towards the current branch, but it can be moved towards another branch/another commit.
