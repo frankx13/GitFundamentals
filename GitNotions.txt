@@ -122,6 +122,36 @@ $ git revert HEAD
 
 Then, we can remove our file and make the "repairing" commit.
 
+//FIX CASE : WRONG COMMIT MADE
+If $git log allows us to enumerate in inverse chronological order all the commits made, with an identifier SHA, the poster of the commit, the date et the message of the commit, there is also the command $git reflog, even more powerful.
+
+$ git reflog allows us to log all commits, but also all the actions made locally.
+It basically shows everything made.
+We can then pick an action, and come back to this action like so :
+$ git checkout [ActionID]
+=> The ActionID does not have to be entire, we can also enter the 8 first digits.
+
+//WHO MODIFIED THIS ?
+We can also use Git to know who modified each line of a file.
+To do so, we use : 
+$ git blame [FileName]
+It will examinate the content of a file line by line and the date of which each line has been modified, plus the name of the author.
+
+
+
+		------CHERRY-PICKING------
+
+Doing a "Cherry-pick" means that we will only merge some specific commits, not all the branch.
+=> Cherry-picking in Git is not considerer to be a Good Practice, because it will also duplicate existing commits. When possible, we prefer to use merge.
+
+So, by selecting the SHA of all the commits we want to cherry-pick, we can do this : 
+git cherry-pick [SHAFirstCommit] [SHAOtherCommit] [Etc...]
+
+This will add those commits to the master branch, without removing them from the current branch (=duplicate).
+
+
+
+
 		------RESOLVE A CONFLICT------
 
 If we have a conflict on the same file, we can easily fix it by opening directly an editor directly, choose which version we want and then commit the changes into Git.
@@ -203,3 +233,59 @@ In the lifecycle, each one acts on a level :
 		------WHAT IS THE HEAD ?------
 
 In Git, the HEAD is a pointer, serving as reference of our current position in our Git working repository. By default, the HEAD points towards the current branch, but it can be moved towards another branch/another commit.
+
+
+
+		------THE GIT TREE AND ITS STRUCTURE------
+
+Git has three principal object types, plus a secondary one.
+
+The three principals are :
+1) The TREE or Git tree, that is a kind of repository. It references a list of trees and blobs (= subdirectories and files).
+2) The COMMIT, which points towars a specific tree and mark it, in order to represent its state at a T time.
+3) The BLOB, usually representing a file (= Binary Large OBject).
+
+=> To stock and order files and repositories, Git use their SHA-1 fingerprint.
+
+The last and secondary object is the TAG. It represents a commit of a specific version.
+
+The hash SHA-1 is a cryptographic string of 40 characters used to identify a file.
+
+For two different object, it's impossible to have the same identifier, because Git recognize it by their SHA-1.
+
+The commit being an object, it also have a SHA-1 unique identifier.
+SHA-1 online generator : https://www.sha1.fr/
+
+
+
+		------MERGING BRANCHES------
+
+The optimal use of a $git merge should be used only for merge branches when the branch to merge is finished and functionnal. 
+The merging is realizing a fusion, it combines several sequences of commits into one unified history.
+It is the most often used to combine two branches, and will create a new merge commit.
+
+
+
+		------PULL & PUSH------
+
+$ git pull will download locally the modifications that happened on the distant repository. It is the combination of the commands $git merge & $git fetch, the pull will create a merge commit like the standard $git merge.
+
+$git pull first use $git fetch to download the content, then the $git merge to merge the distant repository modifications and create a new merge commit locally.
+
+It is used like so :
+$ git pull [DistantRepoName]
+
+On the contrary, $git push will send modifications made locally to the distant repository :
+$ git push [DistantRepoName]
+
+
+
+		------GIT FETCH------
+
+$git fetch will fetch modifications on the distant repo, but not merge it with our local modifications. Git will isolate the content fetched as local content, so this does not affect the local work. 
+
+$git fetch will fetch all data from the commits made on the current branch that don't yet exist in our local version. Those datas are stocked inside the local work repository, but not merge if we don't call $git merge.
+
+PULL OR FETCH ?
+=> $ git pull comes in handy to automatise the data update, but can create many conflicts on big projects.
+=> $ git fetch allows us to keep the work repository up-to-date and control the moment where to merge datas.
