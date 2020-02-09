@@ -1,5 +1,8 @@
 		------CONFIG------
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 //IDENTITY
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
@@ -108,10 +111,14 @@ $ git revert HEAD^
 => no impact on commit standard history
 => it's better to use $git reset for private commit 
 
+<<<<<<< HEAD
 
 
 		------LIFECYCLE------
 
+=======
+		------Lifecycle------
+>>>>>>> master
 //THE .git FILE
 It will appear in the Hidden Folder of an initialized git repository on Windows.
 
@@ -129,6 +136,7 @@ When we use $ git commit, it puts the files from the index into the git reposito
 We can see all those archives and their SHA by calling $ git reflog
 => It's useful the come back on a specific commit!
 The SHA is the identifier of an action.
+<<<<<<< HEAD
 
 
 
@@ -147,3 +155,5 @@ Click on SSH and GPG keys.
 New SSH Key.
 Choose a title and paste the SSH key.
 Confirm the account password and the key will be successfully added.
+=======
+>>>>>>> master
