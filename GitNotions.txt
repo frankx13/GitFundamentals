@@ -1,8 +1,8 @@
 		------CONFIG------
 
 //IDENTITY
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@example.com
+$ git config --global user.name "[Username]"
+$ git config --global user.email [Email]
 //EDITOR - MERGER
 $ git config --global core.editor notepad++
 $ git config --global merge.tool vimdiff
@@ -289,3 +289,117 @@ $git fetch will fetch all data from the commits made on the current branch that 
 PULL OR FETCH ?
 => $ git pull comes in handy to automatise the data update, but can create many conflicts on big projects.
 => $ git fetch allows us to keep the work repository up-to-date and control the moment where to merge datas.
+
+
+
+		------GIT REBASE------
+
+$ git rebase has the same purpose than $git merge = to transfer changes from one branch to another, only the way of doing it change.
+Rebasing allows to rewrite the history.
+There are two types of rebasing : 
+1) - Manual rebase
+2) - Interactive rebase
+
+Rebasing change the base of a branch from a commit to another, giving the illusion that we create a branch from a different commit. Git will then take the modifications of a branch and transfer it on another.
+
+=> rebasing permit to keep a clearer history.
+WARNING : NEVER rebase some commits already pushed on the public repository! This will replace the former commits of the public repo, it would brutally make it disappear.
+
+$ git rebase apply the commits to the current branch and to the end of the transfered branch.
+
+$ git rebase -i start an interactive rebasing session. It will allows us to move the commits one by one with the possibility to modify and delete them.
+This action opens an editor in which we can enter some commands for each commit to rebase. Commands list :
+
+- p, pick = use the commit
+- r, reword = use the commit by modifying its message
+- e, edit = use the commit by bringing some changes
+- s, squash = use the commit but integrate it to the precedent commit
+- f, fixup = like squash but in addition, we can cancel the log message of this commit
+- x, exec = execute the command via Shell
+- d, drop = delete the commit
+
+=> Having a total control of the commit history when we rebase, rebasing is mainly used to clean our history.
+
+//Modify the commits order
+It can serve to modify the commits order too.
+=> if we have 3 commits (com1, com2, com3), we would use :
+$ git rebase -i HEAD~3 
+This permit to rebase only the 3 last commits.
+
+Then, we would use the pick command to indicate in which order to place them : 
+pick 14hg58g1 com2
+pick 25frgf83 com3
+pick 96zkof75 com1
+
+//Modify the commits validation message
+We can also modify the commit messages, here is an example if we want to modify the last commit :
+1) $ git rebase -i HEAD^
+2) edit 54dfiosd 
+3) Save and leave the editor.
+4) $ git commit --amend
+5) $ git rebase --continue
+
+//Clean a branch from the two last commits
+1) $ git rebase -i HEAD~2
+2) drop 58gkbg56 commit52
+    drop 899hbg78 commit53
+
+//Delete the useless branches
+1) git branch -d [NameBranchToDelete]
+
+//Merge several commits into one (= Squashing)
+1) $ git rebase -i HEAD~3 //Select three last commits
+2) pick 57dcsd58 Création du formulaire
+    squash 58gkbg56 Design Formulaire
+    squash 899hbg78 Correction du formulaire 
+
+There, the first commit will have the two other commits applied to him to make only one commit.
+
+
+
+		------GIT BISECT------
+
+$git bisect allows us to tell Git we are searching a bug, Git will then move from commit to commit, and make us test each one for us to say if the bug is there or not. The goal is to find the first commit where the bug happenned.
+=> More commits means a bisect more accurate.
+
+To start, we use : 
+bad = hash of a commit where the bug is present
+good = hash of a commit where the bug is not present
+1) $ git bisect start [bad] [good]
+2) $ git bisect good // if the commit does not have the bug
+    $ git bisect bad // if the commit have the bug
+
+
+
+		------SUBTREES & SUBMODULES------
+
+Submodule = repository inside a repository
+A git submodule allows us to integrate another Git repository inside our current project. The commit management can be done separately for each repository.
+
+To use it :
+$ git submodule add [DistantSubModule] [LocalDestination]
+
+Subtree = allows us to create a new commit tree for a subrepository of our Git repository. It regenerates the history of a repository :
+$ git subtree push -P [NameRepositoryLocal] [DistantRepository] master
+=> The local repo will be pushed on the new distant repo on the master branch.
+
+
+
+		------GIT WORKFLOW------
+
+A Git workflow is a recommendation on how to use Git to achieve a more productive and coherent work. The most famous is GITFLOW.
+Those workflows are designed serve as reference, so they do not constitue concrete rules.
+
+Another popular workflow is the FORKING WORKFLOW :
+Instead of using an unique repository server-side based to use as the central codebase, this workflow provides a repository server-side based for each developer. Consequently, each contributor has two Git repositories : 
+- One private, local-side
+- One public, server-side
+This workflow is mainly used in the Open-Source projects.
+
+The FUNCTIONNALITIES WORKFLOW is also popular :
+The base principle is that each functionnality is developed in a branch designed for it, instead of the master branch.
+Because of this encapsulation, many developers can easily work on the same functionnality without modifying the central codebase. 
+This workflow is mainly used in the Continuous Integration projects.
+
+
+
