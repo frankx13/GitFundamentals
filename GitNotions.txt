@@ -401,5 +401,34 @@ The base principle is that each functionnality is developed in a branch designed
 Because of this encapsulation, many developers can easily work on the same functionnality without modifying the central codebase. 
 This workflow is mainly used in the Continuous Integration projects.
 
+The GITFLOW, created by Vincent Driessen, is a method, a Git architecture allowing to separate work as much as possible and to touch the master branch as little as possible. This method therefore represents an architecture in branches.
+It attributes some very specific roles to the different branches and defines how and when they must interact. 
+
+//Use GitFlow
+To use it, we first need to install GitFlow.
+Then, we can use it in our project by calling :
+$ git flow init
+GitFlow will first define two distinct branches :
+- Master, representing our production environement, where we cannot push directly our modifications
+- Develop, centralizing all the new functionnalities that will be delivered in the next version. It's best not to do modifications in it directly.
+It correspond to our recipe environment. The recipe environment is a copy of the project that is supposed to move in production and where the testers will realize several tests to remove all bugs.
+The master branch stock the official history of versions, et the develop branch serve as the integrative branch for functionnalities.
+
+To those two branches will be added three more branch types :
+- Feature
+- Hotfix
+- Release
+
+Feature branches allows us to start working on a new functionnality. This branch is created from the Develop branch. For each new functionnality, we must have a Feature branch. When the functionnality is ready, we will commit it then merge it on the Develop branch.
+
+Hotfix branch will correct a bug happening in production. This branch will be created from the Master one. Once finished, the Hotfix branch will be merged into to Develop and Master branches. (it's best to use it only for minor modifications).
+
+Release branch is created from the Develop branch when the delivery of the production is imminent. Once all functionnalities of a version have been created, we then can create a Release branch. It will allows us to realize our test while other developers could start to work on the next version. When the Release branch is terminated, we merge it in the Develop and the Master branches.
+
+Once the project is initialized with $git flow init, we can create a new feature, the base of our project : 
+$ git flow feature start main
+This command will create the Feature main and basculate us on it.
 
 
+
+		------IMPROVE GIT WITH TOOLS------
