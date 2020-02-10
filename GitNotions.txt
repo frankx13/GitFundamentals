@@ -432,3 +432,84 @@ This command will create the Feature main and basculate us on it.
 
 
 		------IMPROVE GIT WITH TOOLS------
+
+WhiteSource Bolt for Github : Continuous analysis of all repositories, searching for vulnerabilities in opensource components and applying security patches.
+
+ZenHub : An Agile project management tool integrating itself natively in the Github UI, function with sprints and make advanced reports.
+
+Travis CI : Most famous CI tool, to test and deploy applications.
+
+WinMerge or Meld : File comparators, indicating where the code is different between two files. Very useful for treating conflicts, it asks which version we wish to keep in a conflict. 
+
+
+
+		------GITLAB CI------
+
+GitLab is a platform for hosting and manage Web projects. In comparison with Github, handling the compilation and the repositories management of source code, GitLab extends it with software testing, application packaging, continuous integration and deployment, monitoring and applicative security.
+
+//What is CI ?
+The Continuous Integration allows us to integrate our team's code into a shared repository. Developers then share their new code inside a fusion query (extraction), this triggers the creation, test and validation by a pipeline, before the effective merging of the modifications inside the repository.
+
+Gitlab CI/CD permit to automatize builds, tests, deployments etc...
+The whole process of tasks can be divided in steps and all our tasks and steps form what is called a PIPELINE.
+
+=> The main purpose of CI/CD is to allow developers to focus mainly on the software creation.
+
+GitLab CI/CD offers to a developer to configure an automatized script for the continuous tests, the pull requests, the builds, the different tests environments and even more...
+
+CI = code implementation faster and clearer, due to the progressive integration of this code, with a stronger rythm.
+
+The continuous integration can be resume like so :
+- Writing the code
+- Committing the changes
+- Passing by the CI pipeline (Build, Tests, Integration Tests)
+- Passing by the CD pipeline (Review, Staging, Production)
+
+//CI, some other tools
+
+Jenkins is the biggest concurrent to GitLab for CI.
+It is :
+- Free
+- Open-Source
+- Full of plugins (1000+)
+- Plugin sharable
+- Easy to use
+
+There are other tools less famous like Buildbot, Drone, Concourse...
+
+//Basic Configuration for GiLlab CI
+1) Create a GitLab account
+2) Once created, we can create a project in GitLab, or just use the CI/CD pipeline on an external repository Git or GitHub.
+3) We can then import this repository
+4) To configure the CI, we have to create in our repository a .gitlab-ci.yml file, listing all the tasks to do. 
+When GitLab detects a .gitlab-ci.yml file, it will automatically try to execute its steps with some runners.
+
+
+
+		------MANAGE PULL REQUESTS------
+
+In order to keep a project attractive, it is important to keep an active repository by managing all pull requests made.
+
+We can label our projects with badges to indicate a certain quality, labels can be used for several matters.
+They can be useful :
+- For CI, for example "Build passing" indicates to us that all the tests of a project are passed and the project is functionnal.
+- For security, "vulnerabilities" indicates if one/several vulnerability(ies) has been detected,
+- For indicating the testing of the code ("coverage"),
+- For indicating the module version ("npm package"),
+- For indicating the maintainability of a project ("maintainability")
+
+The score we get from it reflects the project's code quality, depending on different factors : 
+- complexity / simplicity, 
+- readability, 
+- maintainability, 
+- repetition,
+- number of lines per file.
+
+//GitHub "Issues" section
+It allows us to maintain the bug management. Any user/contributor can indicate a bug there.
+We can then affect a label to this issue/bug, and affect this issue to someone in order for him to solve it.
+Once the issue is solved, we can switch the issue status to "closed".
+
+//Minimum approbation for merging
+On big scale projects, we can define a minimal number of approbations by other contributors for being able to merge some changes. 
+=> it increases the security/quality of the code
